@@ -18,61 +18,70 @@ def lambda_handler(event, context):
 def on_intent(request):
 	intent = request['intent']
 	intent_name = intent['name']
-	
+
 	if intent_name == "GetDefinitionIntent":
 		GetDefinitionIntent(intent)
 	elif intent_name == "WordAgain":
 		WordAgain(intent)
 	elif intent_name == "GetPronounciationIntent":
 		GetPronounciationIntent(intent)
-	elif intent_name = "GetExamplesIntent":
+	elif intent_name == "GetExamplesIntent":
 		GetExamplesIntent(intent)
-	elif intent_name = "GetDomainsIntent":
+	elif intent_name == "GetDomainsIntent":
 		GetDomainsIntent(intent)
-	elif intent_name = "GetEtomologiesIntent":
+	elif intent_name == "GetEtomologiesIntent":
 		GetEtomologiesIntent(intent)
-	elif intent_name = "GetRegionsIntent":
+	elif intent_name == "GetRegionsIntent":
 		GetRegionsIntent(intent)
-	elif intent_name = "GetSynonymsIntent":
+	elif intent_name == "GetSynonymsIntent":
 		GetSynonymsIntent(intent)
-	elif intent_name = "GetAntonymsIntent":
+	elif intent_name == "GetAntonymsIntent":
 		GetAntonymsIntent(intent)
-	elif intent_name = "SearchIntent":
+	elif intent_name == "SearchIntent":
 		SearchIntent(intent)
-	elif intent_name = "SpellingIntent":
+	elif intent_name == "SpellingIntent":
 		SpellingIntent(intent)
-	elif intent_name = "GetTranslationsIntent":
+	elif intent_name == "GetTranslationsIntent":
 		GetTranslationsIntent(intent)
 	elif intent_name == "AMAZON.HelpIntent":
 		do_help()
-    elif intent_name == "AMAZON.StopIntent":
-        do_stop()
-    elif intent_name == "AMAZON.CancelIntent":
-        do_stop()
-    else:
-        print("invalid intent reply with help")
-        do_help()
-
+	elif intent_name == "AMAZON.StopIntent":
+		do_stop()
+	elif intent_name == "AMAZON.CancelIntent":
+		do_stop()
+	else:
+		print("Invalid Intent reply with help")
+		do_help()
 
 def GetDefinitionIntent(intent):
 	word = getWord(intent, GetDefinitionIntent)
-	language = getLanguage(intent)
+	language = getLanguage(intent, GetDefinitionIntent)
 	url = baseURL + 'entries/' + language + '/' + word.lower()
 	print(word, language, url)
 
 	r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-	rjson = r.json()
+	rjson = json.loads(r.text)
 	defs = []
-	for lexs in r['results']['lexicalEntries']:
-		for entry in lexs['entries']:
-			for sense in entry['senses']:
-				for definition in sense['definitions']:
-					defs.append(definition)
+	for k in rjson['results']:
+		for i in k['lexicalEntries']:
+			for j in i['entries']:
+				for m in j['senses']:
+					for n in m['definitions']:
+						defs.append(n)
 
-	print ("Defintions:: ", defs)
-
-	print("code {}\n".format(r.status_code))
-	print("json \n" + json.dumps(r.json()))
+	print defs
+	if len(defs) > 1:
+		outputSpeech = "The definitions of the word " + word + " are "
+	else:
+		outputSpeech = "The definition of the word " + word + " is "
+	i = 0
+	for definition in defs:
+		outputSpeech = outputSpeech + definition
+		i = i + 1
+		if i < len(defs):
+			outputSpeech += " or "
+	print outputSpeech
+	response_plain_text(outputSpeech, False)
 
 
 def GetSynonymsIntent(intent):
@@ -110,7 +119,7 @@ def GetPronounciationIntent(intent):
 
 def GetExamplesIntent(intent):
 	word, language = getWordnLanguage(intent, GetExamplesIntent)
-	if language == 'en' || language == 'es':
+	if language == 'en' or language == 'es':
 		url = baseURL + 'entries/' + language + '/' + word + '/sentences'
 	else:
 		response_plain_text(getLanguageNotSupportedMessage(), false, GetExamplesIntent)
@@ -213,8 +222,8 @@ def getWord(intent, callback):
 
 
 def getLanguage(intent, callback):
-	if intent['slots']['LANGUAGE'] != None:
-		lan = intent['slots']['WORD']['value']
+	if intent['slots'].has_key('LANGUAGE') :
+		lan = intent['slots']['LANGUAGE']['value']
 		if lan == 'english':
 			return 'en'
 		elif lan == 'spanish':
