@@ -576,3 +576,482 @@
     }
   ]
 }
+
+
+
+
+******************** Synonyms ****************************
+
+
+
+{
+  "metadata": {
+    "provider": "Oxford University Press"
+  },
+  "results": [
+    {
+      "id": "ace",
+      "language": "en",
+      "lexicalEntries": [
+        {
+          "entries": [
+            {
+              "homographNumber": "000",
+              "senses": [
+                {
+                  "examples": [
+                    {
+                      "text": "a rowing ace"
+                    }
+                  ],
+                  "id": "t_en_gb0000173.001",
+                  "registers": [
+                    "informal"
+                  ],
+                  "subsenses": [
+                    {
+                      "id": "id0d3b47dd-8fb3-4f10-9242-a7360d97fdc2",
+                      "registers": [
+                        "informal"
+                      ],
+                      "synonyms": [
+                        {
+                          "id": "wunderkind",
+                          "language": "en",
+                          "text": "wunderkind"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "idb877b692-457c-45e8-a92c-97644810957c",
+                      "registers": [
+                        "informal"
+                      ],
+                      "synonyms": [
+                        {
+                          "id": "demon",
+                          "language": "en",
+                          "text": "demon"
+                        },
+                        {
+                          "id": "pro",
+                          "language": "en",
+                          "text": "pro"
+                        },
+                        {
+                          "id": "wizard",
+                          "language": "en",
+                          "text": "wizard"
+                        },
+                        {
+                          "id": "hotshot",
+                          "language": "en",
+                          "text": "hotshot"
+                        },
+                        {
+                          "id": "whizz",
+                          "language": "en",
+                          "text": "whizz"
+                        },
+                        {
+                          "id": "wiz",
+                          "language": "en",
+                          "text": "wiz"
+                        },
+                        {
+                          "id": "ninja",
+                          "language": "en",
+                          "text": "ninja"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "idc0d83784-acc8-4883-a584-b8cb21788ba5",
+                      "regions": [
+                        "British"
+                      ],
+                      "registers": [
+                        "informal"
+                      ],
+                      "synonyms": [
+                        {
+                          "id": "dab_hand",
+                          "language": "en",
+                          "text": "dab hand"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "id6707d21c-fe6e-48cc-a0a5-cd2609ec324b",
+                      "regions": [
+                        "North American"
+                      ],
+                      "registers": [
+                        "informal"
+                      ],
+                      "synonyms": [
+                        {
+                          "id": "maven",
+                          "language": "en",
+                          "text": "maven"
+                        },
+                        {
+                          "id": "crackerjack",
+                          "language": "en",
+                          "text": "crackerjack"
+                        }
+                      ]
+                    }
+                  ],
+                  "synonyms": [
+                    {
+                      "id": "expert",
+                      "language": "en",
+                      "text": "expert"
+                    },
+                    {
+                      "id": "master",
+                      "language": "en",
+                      "text": "master"
+                    },
+                    {
+                      "id": "genius",
+                      "language": "en",
+                      "text": "genius"
+                    },
+                    {
+                      "id": "virtuoso",
+                      "language": "en",
+                      "text": "virtuoso"
+                    },
+                    {
+                      "id": "maestro",
+                      "language": "en",
+                      "text": "maestro"
+                    },
+                    {
+                      "id": "professional",
+                      "language": "en",
+                      "text": "professional"
+                    },
+                    {
+                      "id": "adept",
+                      "language": "en",
+                      "text": "adept"
+                    },
+                    {
+                      "id": "past_master",
+                      "language": "en",
+                      "text": "past master"
+                    },
+                    {
+                      "id": "doyen",
+                      "language": "en",
+                      "text": "doyen"
+                    },
+                    {
+                      "id": "champion",
+                      "language": "en",
+                      "text": "champion"
+                    },
+                    {
+                      "id": "star",
+                      "language": "en",
+                      "text": "star"
+                    },
+                    {
+                      "id": "winner",
+                      "language": "en",
+                      "text": "winner"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "en",
+          "lexicalCategory": "Noun",
+          "text": "ace"
+        },
+        {
+          "entries": [
+            {
+              "homographNumber": "001",
+              "senses": [
+                {
+                  "examples": [
+                    {
+                      "text": "an ace tennis player"
+                    }
+                  ],
+                  "id": "t_en_gb0000173.002",
+                  "registers": [
+                    "informal"
+                  ],
+                  "subsenses": [
+                    {
+                      "id": "id3f7aa369-1511-4539-a00f-916bed488e4d",
+                      "registers": [
+                        "informal"
+                      ],
+                      "synonyms": [
+                        {
+                          "id": "great",
+                          "language": "en",
+                          "text": "great"
+                        },
+                        {
+                          "id": "terrific",
+                          "language": "en",
+                          "text": "terrific"
+                        },
+                        {
+                          "id": "tremendous",
+                          "language": "en",
+                          "text": "tremendous"
+                        },
+                        {
+                          "id": "superb",
+                          "language": "en",
+                          "text": "superb"
+                        },
+                        {
+                          "id": "smashing",
+                          "language": "en",
+                          "text": "smashing"
+                        },
+                        {
+                          "id": "fantastic",
+                          "language": "en",
+                          "text": "fantastic"
+                        },
+                        {
+                          "id": "stellar",
+                          "language": "en",
+                          "text": "stellar"
+                        },
+                        {
+                          "id": "sensational",
+                          "language": "en",
+                          "text": "sensational"
+                        },
+                        {
+                          "id": "fabulous",
+                          "language": "en",
+                          "text": "fabulous"
+                        },
+                        {
+                          "id": "fab",
+                          "language": "en",
+                          "text": "fab"
+                        },
+                        {
+                          "id": "crack",
+                          "language": "en",
+                          "text": "crack"
+                        },
+                        {
+                          "id": "hotshot",
+                          "language": "en",
+                          "text": "hotshot"
+                        },
+                        {
+                          "id": "a1",
+                          "language": "en",
+                          "text": "A1"
+                        },
+                        {
+                          "id": "mean",
+                          "language": "en",
+                          "text": "mean"
+                        },
+                        {
+                          "id": "demon",
+                          "language": "en",
+                          "text": "demon"
+                        },
+                        {
+                          "id": "awesome",
+                          "language": "en",
+                          "text": "awesome"
+                        },
+                        {
+                          "id": "magic",
+                          "language": "en",
+                          "text": "magic"
+                        },
+                        {
+                          "id": "wicked",
+                          "language": "en",
+                          "text": "wicked"
+                        },
+                        {
+                          "id": "tip-top",
+                          "language": "en",
+                          "text": "tip-top"
+                        },
+                        {
+                          "id": "top-notch",
+                          "language": "en",
+                          "text": "top-notch"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "id0e0e99ad-a273-40b5-b4a8-c24446d29164",
+                      "regions": [
+                        "British"
+                      ],
+                      "registers": [
+                        "informal"
+                      ],
+                      "synonyms": [
+                        {
+                          "id": "brilliant",
+                          "language": "en",
+                          "text": "brilliant"
+                        },
+                        {
+                          "id": "brill",
+                          "language": "en",
+                          "text": "brill"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "id0dc37dbe-c989-4bae-9343-4cbcac35d9bf",
+                      "regions": [
+                        "North American"
+                      ],
+                      "registers": [
+                        "informal"
+                      ],
+                      "synonyms": [
+                        {
+                          "id": "badass",
+                          "language": "en",
+                          "text": "badass"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "idb5c892a7-1a3a-4f9a-88df-7813e62f86e4",
+                      "registers": [
+                        "informal",
+                        "vulgar slang"
+                      ],
+                      "synonyms": [
+                        {
+                          "id": "shit-hot",
+                          "language": "en",
+                          "text": "shit-hot"
+                        }
+                      ]
+                    }
+                  ],
+                  "synonyms": [
+                    {
+                      "id": "excellent",
+                      "language": "en",
+                      "text": "excellent"
+                    },
+                    {
+                      "id": "very_good",
+                      "language": "en",
+                      "text": "very good"
+                    },
+                    {
+                      "id": "first-rate",
+                      "language": "en",
+                      "text": "first-rate"
+                    },
+                    {
+                      "id": "first-class",
+                      "language": "en",
+                      "text": "first-class"
+                    },
+                    {
+                      "id": "marvellous",
+                      "language": "en",
+                      "text": "marvellous"
+                    },
+                    {
+                      "id": "wonderful",
+                      "language": "en",
+                      "text": "wonderful"
+                    },
+                    {
+                      "id": "magnificent",
+                      "language": "en",
+                      "text": "magnificent"
+                    },
+                    {
+                      "id": "outstanding",
+                      "language": "en",
+                      "text": "outstanding"
+                    },
+                    {
+                      "id": "superlative",
+                      "language": "en",
+                      "text": "superlative"
+                    },
+                    {
+                      "id": "formidable",
+                      "language": "en",
+                      "text": "formidable"
+                    },
+                    {
+                      "id": "virtuoso",
+                      "language": "en",
+                      "text": "virtuoso"
+                    },
+                    {
+                      "id": "masterly",
+                      "language": "en",
+                      "text": "masterly"
+                    },
+                    {
+                      "id": "expert",
+                      "language": "en",
+                      "text": "expert"
+                    },
+                    {
+                      "id": "champion",
+                      "language": "en",
+                      "text": "champion"
+                    },
+                    {
+                      "id": "fine",
+                      "language": "en",
+                      "text": "fine"
+                    },
+                    {
+                      "id": "consummate",
+                      "language": "en",
+                      "text": "consummate"
+                    },
+                    {
+                      "id": "skilful",
+                      "language": "en",
+                      "text": "skilful"
+                    },
+                    {
+                      "id": "adept",
+                      "language": "en",
+                      "text": "adept"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "en",
+          "lexicalCategory": "Adjective",
+          "text": "ace"
+        }
+      ],
+      "type": "headword",
+      "word": "ace"
+    }
+  ]
+}
