@@ -54,7 +54,7 @@ def on_intent(request):
     elif intent_name == "AMAZON.CancelIntent":
         return do_stop()
     else:
-        print "Invalid Intent reply with help"
+        print ("Invalid Intent reply with help")
         do_help()
 
 def GetDefinitionIntent(intent):
@@ -73,7 +73,7 @@ def GetDefinitionIntent(intent):
                     for n in m['definitions']:
                         defs.append(n)
 
-    print defs
+    print (defs)
     if len(defs) > 1:
         outputSpeech = "The definitions of the word " + word + " are "
     else:
@@ -89,7 +89,7 @@ def GetDefinitionIntent(intent):
 
 def GetSynonymsIntent(intent):
     word, language = getWordnLanguage(intent, GetSynonymsIntent)
-    print word, language
+    print (word, language)
     url = baseURL + 'entries/' + language + '/' + word + '/synonyms'
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
@@ -102,7 +102,7 @@ def GetSynonymsIntent(intent):
                     for n in m['synonyms']:
                         syms.append(n['text'])
 
-    print syms
+    print (syms)
     if len(syms) > 1:
         outputSpeech = "Synonyms of the word " + word + " are "
     else :
@@ -129,8 +129,33 @@ def GetAntonymsIntent(intent):
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
 
-    print("code {}\n".format(r.status_code))
-    print("json \n" + json.dumps(r.json()))
+    rjson = json.loads(r.text)
+    antyms = []
+    for k in rjson['results']:
+        for i in k['lexicalEntries']:
+            for j in i['entries']:
+                for m in j['senses']:
+                    for n in m['antonyms']:
+                        antyms.append(n['text'])
+
+    print(antyms)
+    if len(antyms) > 1:
+        outputSpeech = "Antonyms of the word " + word + " are "
+    else :
+        outputSpeech = "Antonym of the word " + word + " is "
+
+    i = 0
+    for syn in antyms:
+        outputSpeech += syn
+        i += 1
+        if i == len(antyms) - 1:
+            outputSpeech += "and "
+        else:
+            outputSpeech += ", "
+    outputSpeech += "."
+
+    return response_plain_text(outputSpeech, True)
+
 
 
 def GetPronounciationIntent(intent):
@@ -140,9 +165,18 @@ def GetPronounciationIntent(intent):
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
 
-    print("code {}\n".format(r.status_code))
-    print("json \n" + json.dumps(r.json()))
+    pronounciation_files = []
+    rjson = json.loads(r.text)
+    for k in rjson['results']:
+        for i in k['lexicalEntries']:
+            pronounciation_files.append(i['pronounciations'][0]['audioFile'])
 
+    outputSpeech = "The pronounciations of the word " + word + " are "
+    for pro in pronounciation_files:
+        outputSpeech += pro + ", "
+
+    return response_plain_text(outputSpeech, True)
+    
 
 def GetExamplesIntent(intent):
     word, language = getWordnLanguage(intent, GetExamplesIntent)
@@ -152,8 +186,19 @@ def GetExamplesIntent(intent):
         response_plain_text(getLanguageNotSupportedMessage(), false, GetExamplesIntent)
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-    print("code {}\n".format(r.status_code))
-    print("json \n" + json.dumps(r.json()))
+    
+    rjson = json.loads(r.text)
+    examples = []
+    for k in rjson['results']:
+        for i in k['lexicalEntries']:
+            for j in i['entries']:
+                for m in j['senses']:
+                    for exs in m['examples']:
+                        examples.append(exs['text'])
+
+    outputSpeech = "The examples of the word " + word + " are "
+    for example in examples :
+        outputSpeech += example + ", "
 
 
 def GetDomainsIntent(intent):
@@ -163,8 +208,20 @@ def GetDomainsIntent(intent):
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
 
-    print("code {}\n".format(r.status_code))
-    print("json \n" + json.dumps(r.json()))
+    rjson = json.loads(r.text)
+    domains = []
+    for k in rjson['results']:
+        for i in k['lexicalEntries']:
+            for j in i['entries']:
+                for m in j['senses']:
+                    for d in m['domains']:
+                        domains.append(d)
+
+    outputSpeech = "The domains in which the word " + word + " is used are "
+    for domain in domains:
+        outputSpeech += domain + ", "
+
+    return response_plain_text(outputSpeech, True)
 
 
 def GetEtomologiesIntent(intent):
@@ -173,9 +230,20 @@ def GetEtomologiesIntent(intent):
     print(word, language, url)
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+    rjson = json.loads(r.text)
+    etymologies = []
+    for k in rjson['results']:
+        for i in k['lexicalEntries']:
+            for j in i['entries']:
+                for etms in j['etymologies']:
+                    etymologies.append(etms)
 
-    print("code {}\n".format(r.status_code))
-    print("json \n" + json.dumps(r.json()))
+    outputSpeech += "The etymologies of the word " + word + " are " 
+    for etms in etymologies:
+        outputSpeech += outputSpeech + ", "
+
+    return response_plain_text(outputSpeech, True)
+    
 
 
 def GetRegionsIntent(intent):
@@ -185,9 +253,20 @@ def GetRegionsIntent(intent):
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
 
-    print("code {}\n".format(r.status_code))
-    print("json \n" + json.dumps(r.json()))
+    rjson = json.loads(r.text)
+    regions = []
+    for k in rjson['results']:
+        for i in k['lexicalEntries']:
+            for j in i['entries']:
+                for m in j['senses']:
+                    for region in m['regions']:
+                        regions.append(region)
 
+    outputSpeech += "The regions in which the word " + word +" is spoken are "
+    for region in regions:
+        outputSpeech += region + ", "
+
+    return response_plain_text(outputSpeech, True)
 
 def SearchIntent(intent):
     word, language = getWordnLanguage(intent, GetAntonymsIntent)
@@ -251,7 +330,7 @@ def getWord(intent, callback):
 def getLanguage(intent, callback):
     if intent['slots'].has_key('LANGUAGE') :
         if intent['slots']['LANGUAGE'].has_key('value'):
-            lan = intent['slots']['LANGUAGE']['value']
+            lan = intent['slots']['LANGUAGE']['value'].lower()
             if lan == 'english':
                 return 'en'
             elif lan == 'spanish':
@@ -285,7 +364,7 @@ def getLanguage(intent, callback):
             elif lan == 'gujarati':
                 return 'gu'
             else:
-                return response_plain_text(getLanguageNotSupportedMessage(), false)
+                return response_plain_text(getLanguageNotSupportedMessage(), False)
         else:
             return 'en'
     else:
@@ -293,7 +372,7 @@ def getLanguage(intent, callback):
 
 
 def response_plain_text(output, endsession):
-    print output
+    print(output)
     """ create a simple json plain text response  """
     return {
         'version'   : '1.0',
@@ -331,9 +410,18 @@ def getWelcomeMessage():
     Messages = [
         "Welcome to Protone Dictionary!",
         "This is Protone Dictionary!",
-        ""
+        "Hello there, How may I help you?",
+        "Welcome to Protone Dictionary, What should I do for you today?",
+        "Welcome, What can I do for you?",
+        "Hello there, shall we get started?",
+        "Welcome, What should I look for today?",
+        "Welcome, did you find any new words?",
+        "Welcome, hope on to the world of words",
+        "I'm soo happy to see you."
+        "Hello, nice to meet you.",
+        "Hello, let's find meaning of some interesting words."
     ];
-    return "Welcome"
+    return Messages[Math.rand(len(Message))]
 
 
 def getWordAgainMessage():
