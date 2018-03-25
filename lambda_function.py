@@ -236,12 +236,13 @@ def GetEtomologiesIntent(intent):
     for k in rjson['results']:
         for i in k['lexicalEntries']:
             for j in i['entries']:
-                for etms in j['etymologies']:
-                    etymologies.append(etms)
+                if j.has_key('etymologies'):
+                    for etms in j['etymologies']:
+                        etymologies.append(etms)
 
-    outputSpeech += "The etymologies of the word " + word + " are " 
+    outputSpeech = "The etymologies of the word " + word + " are " 
     for etms in etymologies:
-        outputSpeech += outputSpeech + ", "
+        outputSpeech += etms + ", "
 
     return response_plain_text(outputSpeech, True)
     
