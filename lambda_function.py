@@ -191,14 +191,14 @@ def GetExamplesIntent(intent):
     examples = []
     for k in rjson['results']:
         for i in k['lexicalEntries']:
-            for j in i['entries']:
-                for m in j['senses']:
-                    for exs in m['examples']:
-                        examples.append(exs['text'])
+            for sent in i['sentences']:
+                examples.append(sent['text'])
 
     outputSpeech = "The examples of the word " + word + " are "
     for example in examples :
         outputSpeech += example + ", "
+
+    return response_plain_text(outputSpeech, True)
 
 
 def GetDomainsIntent(intent):
@@ -214,8 +214,9 @@ def GetDomainsIntent(intent):
         for i in k['lexicalEntries']:
             for j in i['entries']:
                 for m in j['senses']:
-                    for d in m['domains']:
-                        domains.append(d)
+                    if m.has_key('domains'):
+                        for d in m['domains']:
+                            domains.append(d)
 
     outputSpeech = "The domains in which the word " + word + " is used are "
     for domain in domains:
