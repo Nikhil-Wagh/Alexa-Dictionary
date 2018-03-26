@@ -1,5 +1,6 @@
 import requests
 import json
+from random import randint
 
 app_id = '25b51a25'
 app_key = '22990bfcc0e232e45d7a891b399d3ee4'
@@ -12,7 +13,7 @@ def lambda_handler(event, context):
     #         print "Value in attributes is :: " + event['session']['attributes']['Value']
 
     if event['request']['type'] == "LaunchRequest":
-        return response()
+        return response_plain_text(getWelcomeMessage(), False)
     elif event['request']['type'] == "IntentRequest":
         return on_intent(event['request'])
     elif event['request']['type'] == "SessionEndedRequest":
@@ -43,9 +44,9 @@ def on_intent(request):
         return GetAntonymsIntent(intent)
     elif intent_name == "SearchIntent":
         return SearchIntent(intent)
-    elif intent_name == "SpellingIntent":
+    elif intent_name == "GetSpellingIntent":
         return SpellingIntent(intent)
-    elif intent_name == "GetTranslationsIntent":
+    elif intent_name == "TranslationIntent":
         return GetTranslationsIntent(intent)
     elif intent_name == "AMAZON.HelpIntent":
         return do_help()
@@ -58,8 +59,8 @@ def on_intent(request):
         do_help()
 
 def GetDefinitionIntent(intent):
-    word = getWord(intent, GetDefinitionIntent)
-    language = getLanguage(intent, GetDefinitionIntent)
+    word = getWord(intent)
+    language = getLanguage(intent)
     url = baseURL + 'entries/' + language + '/' + word.lower()
     print(word, language, url)
 
@@ -73,22 +74,26 @@ def GetDefinitionIntent(intent):
                     for n in m['definitions']:
                         defs.append(n)
 
-    print (defs)
-    if len(defs) > 1:
-        outputSpeech = "The definitions of the word " + word + " are "
-    else:
-        outputSpeech = "The definition of the word " + word + " is "
-    i = 0
-    for definition in defs:
-        outputSpeech = outputSpeech + definition
-        i = i + 1
-        if i < len(defs):
-            outputSpeech += " or "
+    n = len(defs)
+    starters = [
+        "The definition" + ("s" if n > 1 else "") + " of the word " + word + (" are" if n > 1 else " is") + " as follows, ",
+        "Here's what I found, ",
+        "The word " + word + " means, ",
+        "According to oxford Dictionary, the meaning of the word " + word +" is ",
+        "The word " + word + " defines as follows, ",
+        word + " is defined as, ", 
+        "The denotion of the word " + word + " is, ",
+        "the exposition of the word " + word + " means, ",
+    ]
+    starter = getRandomStarters (starters, n)
+    rest = getFromArray(defs)
+    # print(starter, rest)
+    outputSpeech = starter + rest
     return response_plain_text(outputSpeech, True)
 
 
 def GetSynonymsIntent(intent):
-    word, language = getWordnLanguage(intent, GetSynonymsIntent)
+    word, language = getWordnLanguage(intent)
     print (word, language)
     url = baseURL + 'entries/' + language + '/' + word + '/synonyms'
 
@@ -102,28 +107,19 @@ def GetSynonymsIntent(intent):
                     for n in m['synonyms']:
                         syms.append(n['text'])
 
-    print (syms)
-    if len(syms) > 1:
-        outputSpeech = "Synonyms of the word " + word + " are "
-    else :
-        outputSpeech = "Synonym of the word " + word + " is "
-
-    i = 0
-    for syn in syms:
-        outputSpeech += syn
-        i += 1
-        if i == len(syms) - 1:
-            outputSpeech += "and "
-        else:
-            outputSpeech += ", "
-    outputSpeech += "."
-
+    n = len(syms)
+    starters = [
+        
+    ]
+    starter = getRandomStarters (starters, n)
+    rest = getFromArray(syms)
+    # print(starter, rest)
+    outputSpeech = starter + rest
     return response_plain_text(outputSpeech, True)
 
 
-
 def GetAntonymsIntent(intent):
-    word, language = getWordnLanguage(intent, GetAntonymsIntent)
+    word, language = getWordnLanguage(intent)
     url = baseURL + 'entries/' + language + '/' + word + '/antonyms'
     print(word, language, url)
 
@@ -138,28 +134,20 @@ def GetAntonymsIntent(intent):
                     for n in m['antonyms']:
                         antyms.append(n['text'])
 
-    print(antyms)
-    if len(antyms) > 1:
-        outputSpeech = "Antonyms of the word " + word + " are "
-    else :
-        outputSpeech = "Antonym of the word " + word + " is "
-
-    i = 0
-    for syn in antyms:
-        outputSpeech += syn
-        i += 1
-        if i == len(antyms) - 1:
-            outputSpeech += "and "
-        else:
-            outputSpeech += ", "
-    outputSpeech += "."
-
+    n = len(antyms)
+    starters = [
+        
+    ]
+    starter = getRandomStarters (starters, n)
+    rest = getFromArray(antyms)
+    # print(starter, rest)
+    outputSpeech = starter + rest
     return response_plain_text(outputSpeech, True)
 
 
 
 def GetPronounciationIntent(intent):
-    word, language = getWordnLanguage(intent, GetPronounciationIntent)
+    word, language = getWordnLanguage(intent)
     url = baseURL + 'entries/' + language + '/' + word.lower()
     print(word, language, url)
 
@@ -171,15 +159,19 @@ def GetPronounciationIntent(intent):
         for i in k['lexicalEntries']:
             pronounciation_files.append(i['pronounciations'][0]['audioFile'])
 
-    outputSpeech = "The pronounciations of the word " + word + " are "
-    for pro in pronounciation_files:
-        outputSpeech += pro + ", "
-
+    n = len(pronounciation_files)
+    starters = [
+        
+    ]
+    starter = getRandomStarters (starters, n)
+    rest = getFromArray(pronounciation_files)
+    # print(starter, rest)
+    outputSpeech = starter + rest
     return response_plain_text(outputSpeech, True)
     
 
 def GetExamplesIntent(intent):
-    word, language = getWordnLanguage(intent, GetExamplesIntent)
+    word, language = getWordnLanguage(intent)
     if language == 'en' or language == 'es':
         url = baseURL + 'entries/' + language + '/' + word + '/sentences'
     else:
@@ -194,15 +186,18 @@ def GetExamplesIntent(intent):
             for sent in i['sentences']:
                 examples.append(sent['text'])
 
-    outputSpeech = "The examples of the word " + word + " are "
-    for example in examples :
-        outputSpeech += example + ", "
-
+    n = len(examples)
+    starters = [
+        
+    ]
+    starter = getRandomStarters (starters, n)
+    rest = getFromArray(examples)
+    # print(starter, rest)
+    outputSpeech = starter + rest
     return response_plain_text(outputSpeech, True)
 
-
 def GetDomainsIntent(intent):
-    word, language = getWordnLanguage(intent, GetDomainsIntent)
+    word, language = getWordnLanguage(intent)
     url = baseURL + 'entries/' + language + '/' + word.lower()
     print(word, language, url)
 
@@ -218,15 +213,19 @@ def GetDomainsIntent(intent):
                         for d in m['domains']:
                             domains.append(d)
 
-    outputSpeech = "The domains in which the word " + word + " is used are "
-    for domain in domains:
-        outputSpeech += domain + ", "
-
+    n = len(domains)
+    starters = [
+        
+    ]
+    starter = getRandomStarters (starters, n)
+    rest = getFromArray(domains)
+    # print(starter, rest)
+    outputSpeech = starter + rest
     return response_plain_text(outputSpeech, True)
 
 
 def GetEtomologiesIntent(intent):
-    word, language = getWordnLanguage(intent, GetEtomologiesIntent)
+    word, language = getWordnLanguage(intent)
     url = baseURL + 'entries/' + language + '/' + word.lower()
     print(word, language, url)
 
@@ -240,16 +239,20 @@ def GetEtomologiesIntent(intent):
                     for etms in j['etymologies']:
                         etymologies.append(etms)
 
-    outputSpeech = "The etymologies of the word " + word + " are " 
-    for etms in etymologies:
-        outputSpeech += etms + ", "
-
+    n = len(etymologies)
+    starters = [
+        
+    ]
+    starter = getRandomStarters (starters, n)
+    rest = getFromArray(etymologies)
+    # print(starter, rest)
+    outputSpeech = starter + rest
     return response_plain_text(outputSpeech, True)
     
 
 
 def GetRegionsIntent(intent):
-    word, language = getWordnLanguage(intent, GetRegionsIntent)
+    word, language = getWordnLanguage(intent)
     url = baseURL + 'entries/' + language + '/' + word.lower()
     print(word, language, url)
 
@@ -264,116 +267,205 @@ def GetRegionsIntent(intent):
                     for region in m['regions']:
                         regions.append(region)
 
-    outputSpeech += "The regions in which the word " + word +" is spoken are "
-    for region in regions:
-        outputSpeech += region + ", "
-
+    n = len(regions)
+    starters = [
+        
+    ]
+    starter = getRandomStarters (starters, n)
+    rest = getFromArray(regions)
+    # print(starter, rest)
+    outputSpeech = starter + rest
     return response_plain_text(outputSpeech, True)
 
+
+
 def SearchIntent(intent):
-    word, language = getWordnLanguage(intent, GetAntonymsIntent)
+    word, language = getWordnLanguage(intent)
     url = baseURL + 'search/' + language + '?q=' + word + ',limit=5'
     print(word, language, url)
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+    rjson = json.loads(r.text)
 
-    print("code {}\n".format(r.status_code))
-    print("json \n" + json.dumps(r.json()))
+    words = []
+    for result in rjson['results']:
+        words.append({
+            'word': result['word'],
+            'matchType': result['matchType']
+            })
+
+
+    outputSpeech = "Found these words which might be similar to the word " + word + ". "
+    for word in words:
+        outputSpeech += word['word'] + " of type " + word['matchType'] + " "
+
+    return response_plain_text(outputSpeech, True)
 
 
 def SpellingIntent(intent):
-    word, language = getWordnLanguage(intent, GetEtomologiesIntent)
+    word, language = getWordnLanguage(intent)
     url = baseURL + 'entries/' + language + '/' + word.lower()
     print(word, language, url)
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+    rjson = json.loads(r.text)
 
-    print("code {}\n".format(r.status_code))
-    print("json \n" + json.dumps(r.json()))
+    outputSpeech = "The Spelling of the word " + word + " is <speak><say-as interpret-as=\"spell-out\">" + word + "</say-as>.</speak>"
+    
+    return response_plain_text(outputSpeech, True)
 
 
 def GetTranslationsIntent(intent):
-    word = getWord(intent, GetTranslationsIntent)
-    language1 = getLanguage(intent, GetTranslationsIntent)
-    language2 = getLanguage(intent, GetTranslationsIntent)
+    word = getWord(intent)
+    lan1 = getSlotValue(intent, 'LANGUAGE_O')
+    lan2 = getSlotValue(intent, 'LANGUAGE_T')
+    if lan1 != -1:
+        language1 = checkLanguage(lan1)
+    else:
+        language1 = 'en'
+
+    if lan2 != -1:
+        language2 = checkLanguage(lan2)
+    else:
+        language2 = 'en'
+
+    if language1 == language2:
+        # TODO:// return correct response 
+        return "You cannot translate to same language."
     url = baseURL + 'entries/' + language1 + '/' + word + '/translations=' + language2
-    print(word, language, url)
+    print(word, language1, language2, url)
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+    print(r.status_code)
+    rjson = json.loads(r.text)
 
-    print("code {}\n".format(r.status_code))
-    print("json \n" + json.dumps(r.json()))
+    translations = []
+    for k in rjson['results']:
+        for i in k['lexicalEntries']:
+            for j in i['entries']:
+                for sense in j['senses']:
+                    if sense.has_key('translations'):
+                        for tra in sense['translations']:
+                          translations.append(tra['text'])
+
+
+    n = len(syms)
+    starters = [
+        
+    ]
+    # TODO:// In the following format
+    outputSpeech = "The translations of the word " + word + " in language " + language2 + " are "
+
+    starter = getRandomStarters (starters, n)
+    rest = getFromArray(syms)
+    # print(starter, rest)
+    outputSpeech = starter + rest
+    return response_plain_text(outputSpeech, True)
 
 
 
-def getWordnLanguage(intent, callback):
-    return getWord(intent, callback), getLanguage(intent, callback)
+def getWordnLanguage(intent):
+    return [getWord(intent), getLanguage(intent)]
 
 
-def WordAgain(intent, callback):
-    response_plain_text(getWordAgainMessage(), False)
-    callback(intent)
+def puten(lan):
+    if lan != -1 :
+        return lan
+    return 'en'
+
+def WordAgain(intent):
+    return response_plain_text(getWordAgainMessage(), False)
 
 
 def do_help():
-    response_plain_text(getHelpMessage(), False)
+    return response_plain_text(getHelpMessage(), False)
 
 
 def do_stop():
-    response_plain_text(getStopMessage(), True)
+    return response_plain_text(getStopMessage(), True)
 
 
-def getWord(intent, callback):
-    if intent['slots']['WORD'] != None:
-        return intent['slots']['WORD']['value']
-    return WordAgain(intent, callback)
+def getWord(intent):
+    word = getSlotValue(intent, 'WORD')
+    if word != -1:
+        return word.lower()
+    else:
+        return WordAgain(intent)
 
-
-def getLanguage(intent, callback):
-    if intent['slots'].has_key('LANGUAGE') :
-        if intent['slots']['LANGUAGE'].has_key('value'):
-            lan = intent['slots']['LANGUAGE']['value'].lower()
-            if lan == 'english':
-                return 'en'
-            elif lan == 'spanish':
-                return 'es'
-            elif lan == 'malay':
-                return 'ms'
-            elif lan == 'swahili':
-                return 'sw'
-            elif lan == 'setswana':
-                return 'tn'
-            elif lan == 'northern sotho':
-                return 'nso'
-            elif lan == 'latvian':
-                return 'lv'
-            elif lan == 'indonesian':
-                return 'id'
-            elif lan == 'urdu':
-                return 'ur'
-            elif lan == 'isizulu':
-                return 'zu'
-            elif lan == 'romanian':
-                return 'ro'
-            elif lan == 'hindi':
-                return 'hi'
-            elif lan == 'german':
-                return 'de'
-            elif lan == 'portuguese':
-                return 'pt'
-            elif lan == 'tamil':
-                return 'ta'
-            elif lan == 'gujarati':
-                return 'gu'
-            else:
-                return response_plain_text(getLanguageNotSupportedMessage(), False)
+def getSlotValue(intent, slot):
+    if intent['slots'].has_key(slot):
+        if intent['slots'][slot].has_key('value') :
+            return intent['slots'][slot]['value'].lower()
         else:
-            return 'en'
+            return -1
+    else:
+        return -1
+
+
+def getLanguage(intent):
+    lan = getSlotValue(intent, 'LANGUAGE')
+    if lan != -1:
+        return checkLanguage(lan)
     else:
         return 'en'
 
 
-def response_plain_text(output, endsession):
+def checkLanguage(lan):
+    if lan == 'english':
+        return 'en'
+    elif lan == 'spanish':
+        return 'es'
+    elif lan == 'malay':
+        return 'ms'
+    elif lan == 'swahili':
+        return 'sw'
+    elif lan == 'setswana':
+        return 'tn'
+    elif lan == 'northern sotho':
+        return 'nso'
+    elif lan == 'latvian':
+        return 'lv'
+    elif lan == 'indonesian':
+        return 'id'
+    elif lan == 'urdu':
+        return 'ur'
+    elif lan == 'isizulu':
+        return 'zu'
+    elif lan == 'romanian':
+        return 'ro'
+    elif lan == 'hindi':
+        return 'hi'
+    elif lan == 'german':
+        return 'de'
+    elif lan == 'portuguese':
+        return 'pt'
+    elif lan == 'tamil':
+        return 'ta'
+    elif lan == 'gujarati':
+        return 'gu'
+    else:
+        return response_plain_text(getLanguageNotSupportedMessage(), False)
+
+
+def getRandomStarters(starters, n):
+    return starters[randint(0, n - 1)]  
+
+
+def getFromArray(array):
+    output = ""
+    i = 0
+    for value in array:
+        output += value
+        if i < len(array) - 1:
+            output += ", "
+        else :
+            output += "."
+        if i >= 5:
+            break
+    return output.replace(";", " or ")
+
+
+def response_plain_text(output, endsession, attributes, title, cardContent, repromt):
     print(output)
     """ create a simple json plain text response  """
     return {
@@ -383,10 +475,22 @@ def response_plain_text(output, endsession):
             'outputSpeech'  : {
                 'type'      : 'PlainText',
                 'text'      : output
+            },
+            'card' : {
+                'type' : 'Simple',
+                'title' : title,
+                'content' : cardContent    
+            },
+            'repromt' : {
+                'outputSpeech' : {
+                    'type' : 'PlainText',
+                    'text' : repromt
+                }
             }
         },
-        'sessionAttributes' :{}
+        'sessionAttributes' : attributes
     }
+
 
 def response():
     return {
@@ -405,10 +509,6 @@ def response():
 
 
 def getWelcomeMessage():
-    return ""
-
-
-def getWelcomeMessage():
     Messages = [
         "Welcome to Protone Dictionary!",
         "This is Protone Dictionary!",
@@ -423,7 +523,7 @@ def getWelcomeMessage():
         "Hello, nice to meet you.",
         "Hello, let's find meaning of some interesting words."
     ];
-    return Messages[Math.rand(len(Message))]
+    return Messages[randint(0, len(Message) - 1)]
 
 
 def getWordAgainMessage():

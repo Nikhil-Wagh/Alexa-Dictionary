@@ -1055,3 +1055,1245 @@
     }
   ]
 }
+
+
+
+******************************************************
+******************Translations************************
+******************************************************
+
+{
+  "metadata": {},
+  "results": [
+    {
+      "id": "string",
+      "language": "string",
+      "lexicalEntries": [
+        {
+          "derivativeOf": [
+            {
+              "domains": [
+                "string"
+              ],
+              "id": "string",
+              "language": "string",
+              "regions": [
+                "string"
+              ],
+              "registers": [
+                "string"
+              ],
+              "text": "string"
+            }
+          ],
+          "derivatives": [
+            {
+              "domains": [
+                "string"
+              ],
+              "id": "string",
+              "language": "string",
+              "regions": [
+                "string"
+              ],
+              "registers": [
+                "string"
+              ],
+              "text": "string"
+            }
+          ],
+          "entries": [
+            {
+              "etymologies": [
+                "string"
+              ],
+              "grammaticalFeatures": [
+                {
+                  "text": "string",
+                  "type": "string"
+                }
+              ],
+              "homographNumber": "string",
+              "notes": [
+                {
+                  "id": "string",
+                  "text": "string",
+                  "type": "string"
+                }
+              ],
+              "pronunciations": [
+                {
+                  "audioFile": "string",
+                  "dialects": [
+                    "string"
+                  ],
+                  "phoneticNotation": "string",
+                  "phoneticSpelling": "string",
+                  "regions": [
+                    "string"
+                  ]
+                }
+              ],
+              "senses": [
+                {
+                  "crossReferenceMarkers": [
+                    "string"
+                  ],
+                  "crossReferences": [
+                    {
+                      "id": "string",
+                      "text": "string",
+                      "type": "string"
+                    }
+                  ],
+                  "definitions": [
+                    "string"
+                  ],
+                  "domains": [
+                    "string"
+                  ],
+                  "examples": [
+                    {
+                      "definitions": [
+                        "string"
+                      ],
+                      "domains": [
+                        "string"
+                      ],
+                      "notes": [
+                        {
+                          "id": "string",
+                          "text": "string",
+                          "type": "string"
+                        }
+                      ],
+                      "regions": [
+                        "string"
+                      ],
+                      "registers": [
+                        "string"
+                      ],
+                      "senseIds": [
+                        "string"
+                      ],
+                      "text": "string",
+                      "translations": [
+                        {
+                          "domains": [
+                            "string"
+                          ],
+                          "grammaticalFeatures": [
+                            {
+                              "text": "string",
+                              "type": "string"
+                            }
+                          ],
+                          "language": "string",
+                          "notes": [
+                            {
+                              "id": "string",
+                              "text": "string",
+                              "type": "string"
+                            }
+                          ],
+                          "regions": [
+                            "string"
+                          ],
+                          "registers": [
+                            "string"
+                          ],
+                          "text": "string"
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "string",
+                  "notes": [
+                    {
+                      "id": "string",
+                      "text": "string",
+                      "type": "string"
+                    }
+                  ],
+                  "pronunciations": [
+                    {
+                      "audioFile": "string",
+                      "dialects": [
+                        "string"
+                      ],
+                      "phoneticNotation": "string",
+                      "phoneticSpelling": "string",
+                      "regions": [
+                        "string"
+                      ]
+                    }
+                  ],
+                  "regions": [
+                    "string"
+                  ],
+                  "registers": [
+                    "string"
+                  ],
+                  "subsenses": [
+                    {}
+                  ],
+                  "translations": [
+                    {
+                      "domains": [
+                        "string"
+                      ],
+                      "grammaticalFeatures": [
+                        {
+                          "text": "string",
+                          "type": "string"
+                        }
+                      ],
+                      "language": "string",
+                      "notes": [
+                        {
+                          "id": "string",
+                          "text": "string",
+                          "type": "string"
+                        }
+                      ],
+                      "regions": [
+                        "string"
+                      ],
+                      "registers": [
+                        "string"
+                      ],
+                      "text": "string"
+                    }
+                  ],
+                  "variantForms": [
+                    {
+                      "regions": [
+                        "string"
+                      ],
+                      "text": "string"
+                    }
+                  ]
+                }
+              ],
+              "variantForms": [
+                {
+                  "regions": [
+                    "string"
+                  ],
+                  "text": "string"
+                }
+              ]
+            }
+          ],
+          "grammaticalFeatures": [
+            {
+              "text": "string",
+              "type": "string"
+            }
+          ],
+          "language": "string",
+          "lexicalCategory": "string",
+          "notes": [
+            {
+              "id": "string",
+              "text": "string",
+              "type": "string"
+            }
+          ],
+          "pronunciations": [
+            {
+              "audioFile": "string",
+              "dialects": [
+                "string"
+              ],
+              "phoneticNotation": "string",
+              "phoneticSpelling": "string",
+              "regions": [
+                "string"
+              ]
+            }
+          ],
+          "text": "string",
+          "variantForms": [
+            {
+              "regions": [
+                "string"
+              ],
+              "text": "string"
+            }
+          ]
+        }
+      ],
+      "pronunciations": [
+        {
+          "audioFile": "string",
+          "dialects": [
+            "string"
+          ],
+          "phoneticNotation": "string",
+          "phoneticSpelling": "string",
+          "regions": [
+            "string"
+          ]
+        }
+      ],
+      "type": "string",
+      "word": "string"
+    }
+  ]
+}
+
+//////////////////////////////////////////////////////////////
+
+{
+  "metadata": {
+    "provider": "Oxford University Press"
+  },
+  "results": [
+    {
+      "id": "change",
+      "language": "en",
+      "lexicalEntries": [
+        {
+          "entries": [
+            {
+              "grammaticalFeatures": [
+                {
+                  "text": "Singular",
+                  "type": "Number"
+                }
+              ],
+              "homographNumber": "000",
+              "senses": [
+                {
+                  "id": "b-en-es0008145.002",
+                  "subsenses": [
+                    {
+                      "examples": [
+                        {
+                          "text": "the change (of life)",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "la menopausia"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "a period of great change",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "un período de grandes cambios"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "a change in public opinion/the law",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "un cambio en la opinión pública/la ley"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "there has been little change in the last 20 years",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "ha habido pocos cambios en los últimos 20 años"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "to make changes to sth",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "hacerle cambios a algo"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "a change in temperature",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "un cambio de temperatura"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "there's been a change in the weather",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "ha cambiado el tiempo"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.003",
+                      "notes": [
+                        {
+                          "text": "alteration",
+                          "type": "indicator"
+                        },
+                        {
+                          "text": "uncountable and countable",
+                          "type": "grammaticalNote"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambio"
+                        }
+                      ]
+                    },
+                    {
+                      "examples": [
+                        {
+                          "text": "an oil/wheel change",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "un cambio de aceite/rueda"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "a change of address/plan/government",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "un cambio de dirección/plan/gobierno"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.004",
+                      "notes": [
+                        {
+                          "text": "replacement",
+                          "type": "indicator"
+                        },
+                        {
+                          "text": "countable",
+                          "type": "grammaticalNote"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambio"
+                        }
+                      ]
+                    },
+                    {
+                      "examples": [
+                        {
+                          "text": "bring at least one change of clothes/underwear",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "tráete al menos una muda (de ropa)/de ropa interior"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.005",
+                      "notes": [
+                        {
+                          "text": "of clothes",
+                          "type": "indicator"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "muda"
+                        }
+                      ]
+                    },
+                    {
+                      "examples": [
+                        {
+                          "text": "at least it's / it makes a change from chicken",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "por lo menos no es pollo"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "going abroad would be / make a nice change",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "no estaría mal ir al extranjero para variar"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.006",
+                      "notes": [
+                        {
+                          "text": "sth different from usual",
+                          "type": "indicator"
+                        },
+                        {
+                          "text": "countable",
+                          "type": "grammaticalNote"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambio"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "b-en-es0008145.007",
+                  "notes": [
+                    {
+                      "text": "uncountable",
+                      "type": "grammaticalNote"
+                    }
+                  ],
+                  "subsenses": [
+                    {
+                      "examples": [
+                        {
+                          "text": "I can give change for / of $5",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "te puedo cambiar 5 dólares"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "can you give me some change for the machine?",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "¿me das cambio / monedas para la máquina?"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "I don't have any loose change",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "no tengo dinero suelto"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "one dollar in change",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "un dólar en monedas"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.008",
+                      "notes": [
+                        {
+                          "text": "coins",
+                          "type": "indicator"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambio"
+                        },
+                        {
+                          "language": "es",
+                          "text": "monedas"
+                        },
+                        {
+                          "language": "es",
+                          "regions": [
+                            "Latin America"
+                          ],
+                          "text": "sencillo"
+                        },
+                        {
+                          "language": "es",
+                          "regions": [
+                            "Mexico"
+                          ],
+                          "registers": [
+                            "informal"
+                          ],
+                          "text": "feria"
+                        },
+                        {
+                          "language": "es",
+                          "regions": [
+                            "Colombia"
+                          ],
+                          "text": "menudo"
+                        }
+                      ]
+                    },
+                    {
+                      "examples": [
+                        {
+                          "text": "you can eat well and still have/get change from $10",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "se puede comer bien por menos de 10 dólares"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "sixty pence change",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "sesenta peniques de cambio (or vuelto etc.)"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "you won't get much change from / out of $1,000",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "no te costará mucho menos de 1.000 dólares"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "keep the change",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "quédese con el cambio (or vuelto etc.)"
+                            },
+                            {
+                              "language": "es",
+                              "text": "quédese (con) el cambio"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.009",
+                      "notes": [
+                        {
+                          "text": "money returned",
+                          "type": "indicator"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambio"
+                        },
+                        {
+                          "language": "es",
+                          "regions": [
+                            "Latin America"
+                          ],
+                          "text": "vuelto"
+                        },
+                        {
+                          "language": "es",
+                          "regions": [
+                            "Spain"
+                          ],
+                          "text": "vuelta"
+                        },
+                        {
+                          "language": "es",
+                          "regions": [
+                            "Colombia"
+                          ],
+                          "text": "vueltas"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "en",
+          "lexicalCategory": "Noun",
+          "text": "change"
+        },
+        {
+          "entries": [
+            {
+              "grammaticalFeatures": [
+                {
+                  "text": "Transitive",
+                  "type": "Subcategorization"
+                },
+                {
+                  "text": "Present",
+                  "type": "Tense"
+                }
+              ],
+              "homographNumber": "001",
+              "senses": [
+                {
+                  "id": "b-en-es0008145.033",
+                  "subsenses": [
+                    {
+                      "examples": [
+                        {
+                          "text": "the sorcerer changed her into a stone",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "el mago la convirtió en una piedra"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "you can't change the way you are",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "uno no cambia"
+                            },
+                            {
+                              "language": "es",
+                              "text": "no se puede cambiar la manera de ser"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.034",
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiar"
+                        }
+                      ]
+                    },
+                    {
+                      "examples": [
+                        {
+                          "text": "to change position/direction/color",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "cambiar de posición/dirección/color"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "she changed her name from Bronowski to Brown",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "se cambió el apellido de Bronowski a Brown"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "I've changed jobs",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "he cambiado de trabajo"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "the time/date of the concert has been changed",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "han cambiado la hora/fecha del concierto"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "to change one's address/job/doctor",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "cambiar de dirección/trabajo/médico"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "to change gear",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "cambiar de marcha"
+                            },
+                            {
+                              "language": "es",
+                              "text": "hacer el cambio"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.035",
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiar"
+                        }
+                      ]
+                    },
+                    {
+                      "examples": [
+                        {
+                          "text": "if he doesn't like it can I change it?",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "si no le gusta ¿puedo cambiarlo?"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "I wouldn't want to change places with her",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "no quisiera estar / verme en su lugar"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "he changed it for a red one",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "lo cambió por uno rojo"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.036",
+                      "notes": [
+                        {
+                          "text": "exchange",
+                          "type": "indicator"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiar(se) de"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "b-en-es0008145.037",
+                  "subsenses": [
+                    {
+                      "examples": [
+                        {
+                          "text": "can anyone change $20?",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "¿alguien me puede cambiar 20 dólares?"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.038",
+                      "notes": [
+                        {
+                          "text": "into smaller denominations",
+                          "type": "indicator"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiar"
+                        }
+                      ]
+                    },
+                    {
+                      "examples": [
+                        {
+                          "text": "to change dollars into pesos",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "regions": [
+                                "Spain"
+                              ],
+                              "text": "cambiar dólares en pesos"
+                            },
+                            {
+                              "language": "es",
+                              "text": "cambiar dólares a pesos"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "to change sth (into sth)",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "cambiar algo (a algo)"
+                            },
+                            {
+                              "language": "es",
+                              "regions": [
+                                "Spain"
+                              ],
+                              "text": "cambiar algo (en algo)"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.039",
+                      "notes": [
+                        {
+                          "text": "into foreign currency",
+                          "type": "indicator"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiar"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "examples": [
+                    {
+                      "text": "to change one's clothes/shoes",
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiarse de ropa/de zapatos"
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "b-en-es0008145.040",
+                  "translations": [
+                    {
+                      "language": "es",
+                      "text": "cambiar"
+                    }
+                  ]
+                },
+                {
+                  "domains": [
+                    "Transport"
+                  ],
+                  "examples": [
+                    {
+                      "text": "you have to change train(s) at Nice",
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "tienes que hacer transbordo / cambiar (de trenes) en Niza"
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "b-en-es0008145.041"
+                }
+              ]
+            },
+            {
+              "grammaticalFeatures": [
+                {
+                  "text": "Intransitive",
+                  "type": "Subcategorization"
+                },
+                {
+                  "text": "Present",
+                  "type": "Tense"
+                }
+              ],
+              "homographNumber": "002",
+              "senses": [
+                {
+                  "id": "b-en-es0008145.043",
+                  "subsenses": [
+                    {
+                      "examples": [
+                        {
+                          "text": "I can't believe how much she's changed",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "me parece increíble lo mucho que ha cambiado"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "to change in shape/size",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "cambiar de forma/tamaño"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "she's a changed person since she met him",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "desde que lo conoció es otra"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "customs have changed",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "las costumbres han cambiado"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "to change into sth",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "convertirse / transformarse en algo"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.044",
+                      "notes": [
+                        {
+                          "text": "become different",
+                          "type": "indicator"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiar"
+                        }
+                      ]
+                    },
+                    {
+                      "examples": [
+                        {
+                          "text": "her smile changed to a frown",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "dejó de sonreír y frunció el ceño"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "the scene changes to wartime Rome",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "la escena pasa / se traslada a Roma durante la guerra"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "the cast changes every three months",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "el reparto cambia cada tres meses"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "the traffic lights changed",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "cambió el semáforo"
+                            },
+                            {
+                              "language": "es",
+                              "text": "cambiaron las luces (del semáforo)"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "I've changed to a new dentist",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "he cambiado de dentista"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.045",
+                      "notes": [
+                        {
+                          "text": "from one thing to another",
+                          "type": "indicator"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiar"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "b-en-es0008145.046",
+                      "notes": [
+                        {
+                          "text": "\"changing\" present participle",
+                          "type": "wordFormNote"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiante"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "b-en-es0008145.047",
+                  "subsenses": [
+                    {
+                      "examples": [
+                        {
+                          "text": "to get changed",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "cambiarse"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "change out of those wet clothes",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "quítate esa ropa mojada"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "I'm going upstairs to change",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "voy arriba a cambiarme"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "she changed into a black dress",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "se cambió y se puso un vestido negro"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "I'm going to change into something more comfortable",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "me voy a poner algo más cómodo"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.048",
+                      "notes": [
+                        {
+                          "text": "put on different clothes",
+                          "type": "indicator"
+                        }
+                      ],
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiarse"
+                        }
+                      ]
+                    },
+                    {
+                      "domains": [
+                        "Transport"
+                      ],
+                      "examples": [
+                        {
+                          "text": "we have to change at Victoria",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "tenemos que cambiar / hacer transbordo en Victoria"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "all change!",
+                          "translations": [
+                            {
+                              "language": "es",
+                              "text": "¡fin de trayecto!"
+                            }
+                          ]
+                        }
+                      ],
+                      "id": "b-en-es0008145.049",
+                      "translations": [
+                        {
+                          "language": "es",
+                          "text": "cambiar"
+                        },
+                        {
+                          "language": "es",
+                          "text": "hacer transbordo"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "language": "en",
+          "lexicalCategory": "Verb",
+          "text": "change"
+        }
+      ],
+      "type": "headword",
+      "word": "change"
+    }
+  ]
+}
