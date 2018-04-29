@@ -1,19 +1,18 @@
 import requests
 import json
-from random import randint
+import random
+import re
 
 app_id = '25b51a25'
 app_key = '22990bfcc0e232e45d7a891b399d3ee4'
 baseURL = 'https://od-api.oxforddictionaries.com:443/api/v1/'
 choice = -1
 
-def lambda_handler(event, context):
-    # if 'attributes' in event['session']:
-    #     if event['session']['attributes']['Value']:
-    #         print "Value in attributes is :: " + event['session']['attributes']['Value']
+# python-lambda-local -f lambda_handler -t 10 lambda_function.py ./events/event.json
 
+def lambda_handler(event, context):
     if event['request']['type'] == "LaunchRequest":
-        return response_plain_text(getWelcomeMessage(), False)
+        return response(getWelcomeMessage(), False)
     elif event['request']['type'] == "IntentRequest":
         return on_intent(event['request'])
     elif event['request']['type'] == "SessionEndedRequest":
@@ -24,26 +23,22 @@ def on_intent(request):
     intent = request['intent']
     intent_name = intent['name']
 
+    if 'dialogState' in request:
+        if request['dialogState'] == "STARTED" or request['dialogState'] == "IN_PROGRESS":
+            return dialog_response(request['dialogState'], False)
+
     if intent_name == "GetDefinitionIntent":
         return GetDefinitionIntent(intent)
-    elif intent_name == "WordAgain":
-        return WordAgain(intent)
-    elif intent_name == "GetPronounciationIntent":
-        return GetPronounciationIntent(intent)
+    elif intent_name == "GetSynonymsIntent":
+        return GetSynonymsIntent(intent)
+    elif intent_name == "GetAntonymsIntent":
+        return GetAntonymsIntent(intent)
     elif intent_name == "GetExamplesIntent":
         return GetExamplesIntent(intent)
     elif intent_name == "GetDomainsIntent":
         return GetDomainsIntent(intent)
     elif intent_name == "GetEtomologiesIntent":
         return GetEtomologiesIntent(intent)
-    elif intent_name == "GetRegionsIntent":
-        return GetRegionsIntent(intent)
-    elif intent_name == "GetSynonymsIntent":
-        return GetSynonymsIntent(intent)
-    elif intent_name == "GetAntonymsIntent":
-        return GetAntonymsIntent(intent)
-    elif intent_name == "SearchIntent":
-        return SearchIntent(intent)
     elif intent_name == "GetSpellingIntent":
         return SpellingIntent(intent)
     elif intent_name == "TranslationIntent":
@@ -85,17 +80,17 @@ def GetDefinitionIntent(intent):
         "The denotion of the word " + word + " is, ",
         "the exposition of the word " + word + " means, ",
     ]
-    starter = getRandomStarters (starters, n)
+    starter = getRandom (starters)
     rest = getFromArray(defs)
-    # print(starter, rest)
     outputSpeech = starter + rest
-    return response_plain_text(outputSpeech, True)
+    return response(outputSpeech, True)
 
 
 def GetSynonymsIntent(intent):
     word, language = getWordnLanguage(intent)
     print (word, language)
     url = baseURL + 'entries/' + language + '/' + word + '/synonyms'
+    print(word, language, url)
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
     rjson = json.loads(r.text)
@@ -109,13 +104,13 @@ def GetSynonymsIntent(intent):
 
     n = len(syms)
     starters = [
-        
+        "Here's what I've found, "
     ]
-    starter = getRandomStarters (starters, n)
+    starter = getRandom (starters)
     rest = getFromArray(syms)
     # print(starter, rest)
     outputSpeech = starter + rest
-    return response_plain_text(outputSpeech, True)
+    return response(outputSpeech, True)
 
 
 def GetAntonymsIntent(intent):
@@ -136,38 +131,13 @@ def GetAntonymsIntent(intent):
 
     n = len(antyms)
     starters = [
-        
+        "Here's what I've found, "
     ]
-    starter = getRandomStarters (starters, n)
+    starter = getRandom (starters)
     rest = getFromArray(antyms)
     # print(starter, rest)
     outputSpeech = starter + rest
-    return response_plain_text(outputSpeech, True)
-
-
-
-def GetPronounciationIntent(intent):
-    word, language = getWordnLanguage(intent)
-    url = baseURL + 'entries/' + language + '/' + word.lower()
-    print(word, language, url)
-
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-
-    pronounciation_files = []
-    rjson = json.loads(r.text)
-    for k in rjson['results']:
-        for i in k['lexicalEntries']:
-            pronounciation_files.append(i['pronounciations'][0]['audioFile'])
-
-    n = len(pronounciation_files)
-    starters = [
-        
-    ]
-    starter = getRandomStarters (starters, n)
-    rest = getFromArray(pronounciation_files)
-    # print(starter, rest)
-    outputSpeech = starter + rest
-    return response_plain_text(outputSpeech, True)
+    return response(outputSpeech, True)
     
 
 def GetExamplesIntent(intent):
@@ -186,15 +156,23 @@ def GetExamplesIntent(intent):
             for sent in i['sentences']:
                 examples.append(sent['text'])
 
-    n = len(examples)
     starters = [
-        
+        "Here's what I've found, "
     ]
-    starter = getRandomStarters (starters, n)
-    rest = getFromArray(examples)
+    starter = getRandom (starters)
+    rest = ""
+    i = 0
+    for e in examples :
+        index = e.find(word) 
+        e = e[ : e.find(",")]
+        if index != -1: 
+            rest += e[:index] + '<emphasis level="strong">' + e[index : e.find(" ", index)] + '</emphasis>' + e[e.find(" ", index) : ] + ". "
+        if i > 1:
+            break
+        i += 1
     # print(starter, rest)
     outputSpeech = starter + rest
-    return response_plain_text(outputSpeech, True)
+    return response_SSML(outputSpeech, True)
 
 def GetDomainsIntent(intent):
     word, language = getWordnLanguage(intent)
@@ -202,26 +180,26 @@ def GetDomainsIntent(intent):
     print(word, language, url)
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-
     rjson = json.loads(r.text)
-    domains = []
+
+    domains = set()
     for k in rjson['results']:
         for i in k['lexicalEntries']:
             for j in i['entries']:
                 for m in j['senses']:
                     if m.has_key('domains'):
                         for d in m['domains']:
-                            domains.append(d)
+                            domains.add(d)
 
     n = len(domains)
     starters = [
-        
+        "Here's what I've found, "
     ]
-    starter = getRandomStarters (starters, n)
+    starter = getRandom (starters)
     rest = getFromArray(domains)
     # print(starter, rest)
     outputSpeech = starter + rest
-    return response_plain_text(outputSpeech, True)
+    return response(outputSpeech, True)
 
 
 def GetEtomologiesIntent(intent):
@@ -231,6 +209,7 @@ def GetEtomologiesIntent(intent):
 
     r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
     rjson = json.loads(r.text)
+
     etymologies = []
     for k in rjson['results']:
         for i in k['lexicalEntries']:
@@ -241,78 +220,20 @@ def GetEtomologiesIntent(intent):
 
     n = len(etymologies)
     starters = [
-        
+        "Here's what I've found, "
     ]
-    starter = getRandomStarters (starters, n)
+    starter = getRandom (starters)
     rest = getFromArray(etymologies)
     # print(starter, rest)
     outputSpeech = starter + rest
-    return response_plain_text(outputSpeech, True)
+    return response(outputSpeech, True)
     
-
-
-def GetRegionsIntent(intent):
-    word, language = getWordnLanguage(intent)
-    url = baseURL + 'entries/' + language + '/' + word.lower()
-    print(word, language, url)
-
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-
-    rjson = json.loads(r.text)
-    regions = []
-    for k in rjson['results']:
-        for i in k['lexicalEntries']:
-            for j in i['entries']:
-                for m in j['senses']:
-                    for region in m['regions']:
-                        regions.append(region)
-
-    n = len(regions)
-    starters = [
-        
-    ]
-    starter = getRandomStarters (starters, n)
-    rest = getFromArray(regions)
-    # print(starter, rest)
-    outputSpeech = starter + rest
-    return response_plain_text(outputSpeech, True)
-
-
-
-def SearchIntent(intent):
-    word, language = getWordnLanguage(intent)
-    url = baseURL + 'search/' + language + '?q=' + word + ',limit=5'
-    print(word, language, url)
-
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-    rjson = json.loads(r.text)
-
-    words = []
-    for result in rjson['results']:
-        words.append({
-            'word': result['word'],
-            'matchType': result['matchType']
-            })
-
-
-    outputSpeech = "Found these words which might be similar to the word " + word + ". "
-    for word in words:
-        outputSpeech += word['word'] + " of type " + word['matchType'] + " "
-
-    return response_plain_text(outputSpeech, True)
-
 
 def SpellingIntent(intent):
     word, language = getWordnLanguage(intent)
-    url = baseURL + 'entries/' + language + '/' + word.lower()
-    print(word, language, url)
-
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-    rjson = json.loads(r.text)
-
-    outputSpeech = "The Spelling of the word " + word + " is <speak><say-as interpret-as=\"spell-out\">" + word + "</say-as>.</speak>"
+    outputSpeech = "The spelling of the word " + word + " is <say-as interpret-as=\"spell-out\">" + word + "</say-as>."
     
-    return response_plain_text(outputSpeech, True)
+    return response_SSML(outputSpeech, True)
 
 
 def GetTranslationsIntent(intent):
@@ -332,6 +253,10 @@ def GetTranslationsIntent(intent):
     if language1 == language2:
         # TODO:// return correct response 
         return "You cannot translate to same language."
+    available_languages = ['en', 'es', 'nso', 'zu', 'ms', 'id', 'tn', 'ur', 'pt', 'de']
+    if language1 not in available_languages or language2 not in available_languages:
+        return response("Sorry, for translation only these languages are supported, English, Spanish, Northern Sotho, isiZulu, Malay, Indonesian, Setswana, Urdu, Portuguese and German.", True)
+
     url = baseURL + 'entries/' + language1 + '/' + word + '/translations=' + language2
     print(word, language1, language2, url)
 
@@ -348,19 +273,12 @@ def GetTranslationsIntent(intent):
                         for tra in sense['translations']:
                           translations.append(tra['text'])
 
+    starter = "The " + lan2 + " translation of " + lan1 + " word " + word + " is, " 
 
-    n = len(syms)
-    starters = [
-        
-    ]
-    # TODO:// In the following format
-    outputSpeech = "The translations of the word " + word + " in language " + language2 + " are "
-
-    starter = getRandomStarters (starters, n)
-    rest = getFromArray(syms)
+    rest = getFromArray(translations)
     # print(starter, rest)
     outputSpeech = starter + rest
-    return response_plain_text(outputSpeech, True)
+    return response(outputSpeech, True)
 
 
 
@@ -373,16 +291,30 @@ def puten(lan):
         return lan
     return 'en'
 
-def WordAgain(intent):
-    return response_plain_text(getWordAgainMessage(), False)
-
 
 def do_help():
-    return response_plain_text(getHelpMessage(), False)
+    Message = "You can ask for definitions, synonyms, antonyms, examples, domains in which your word is spoken, etomologies, spellings and translations" \
+            "you can say, tell me the definition of the word 'change', "\
+            "or you can say, tell me the synonyms of the word 'change', "\
+            "or you can say, tell me the examples of the word 'change', "\
+            "or you can say, tell me the domains in which the word 'change' is used, "\
+            "or you can say, what is the etomology of the word 'change', "\
+            "or you can say, what is the spelling of the word 'change'. "\
+            "What can I do for you?"
+    return response(Message, False)
 
 
 def do_stop():
-    return response_plain_text(getStopMessage(), True)
+    Messages = [
+        "Good Bye!!!",
+        "Aloha",
+        "Ciao",
+        "Bon Voyage",
+        "We'll meet again.",
+        "Hope that I helped.",
+        "Sayonara"
+    ]
+    return response(getRandom(Messages), True)
 
 
 def getWord(intent):
@@ -447,26 +379,37 @@ def checkLanguage(lan):
         return response_plain_text(getLanguageNotSupportedMessage(), False)
 
 
-def getRandomStarters(starters, n):
-    return starters[randint(0, n - 1)]  
+def getRandom(starters):
+    return starters[random.randint(0, len(starters) - 1)] 
 
 
 def getFromArray(array):
     output = ""
     i = 0
+    random.shuffle(array)
     for value in array:
-        output += value
-        if i < len(array) - 1:
+        if value.find(";") != -1:
+            output += value[:value.find(";")]
+        else : 
+            output += value
+        if i <= len(array) - 2 and i < 5:
             output += ", "
-        else :
+        if i == len(array) - 2 or i == 4:
+            output += "and, "
+        if i == len(array) - 1 or i == 5: 
             output += "."
         if i >= 5:
             break
-    return output.replace(";", " or ")
+        i += 1
+    output = output.replace(";", " and")
+    output = re.sub('[^A-Za-z0-9,. ]+', '', output)
+    return output
 
 
 def response_plain_text(output, endsession, attributes, title, cardContent, repromt):
+    print("\n")
     print(output)
+    print("\n")
     """ create a simple json plain text response  """
     return {
         'version'   : '1.0',
@@ -492,14 +435,17 @@ def response_plain_text(output, endsession, attributes, title, cardContent, repr
     }
 
 
-def response():
+def response(outputSpeech, shouldEndSession):
+    print("\n")
+    print(outputSpeech)
+    print("\n")
     return {
         'version'   : '1.0',
         'response'  : {
-            'shouldEndSession'  : False,
+            'shouldEndSession'  : shouldEndSession,
             'outputSpeech'  : {
                 'type'      : 'PlainText',
-                'text'      : "How can I help you?"
+                'text'      : outputSpeech
             }
         },
         'sessionAttributes' :{
@@ -519,15 +465,11 @@ def getWelcomeMessage():
         "Welcome, What should I look for today?",
         "Welcome, did you find any new words?",
         "Welcome, hope on to the world of words",
-        "I'm soo happy to see you."
+        "I'm soo happy to see you.",
         "Hello, nice to meet you.",
         "Hello, let's find meaning of some interesting words."
     ];
-    return Messages[randint(0, len(Message) - 1)]
-
-
-def getWordAgainMessage():
-    return "Please repeat the word again"
+    return getRandom(Messages)
 
 
 def getHelpMessage():
@@ -541,3 +483,49 @@ def getStopMessage():
 
 def getLanguageNotSupportedMessage():
     return "Sorry the given language is not supported for this operation"
+
+
+def dialog_response(attributes, endsession):
+
+    return {
+        'version': '1.0',
+        'sessionAttributes': attributes,
+        'response':{
+            'directives': [
+                {
+                    'type': 'Dialog.Delegate'
+                }
+            ],
+            'shouldEndSession': endsession
+        }
+}
+
+def response_SSML(outputSpeech, shouldEndSession):
+    return {
+        'version'   : '1.0',
+        'response'  : {
+            'shouldEndSession'  : shouldEndSession,
+            'outputSpeech'  : {
+                'type'      : 'SSML',
+                'ssml'      : '<speak> ' + outputSpeech + '</speak>'
+            }
+        }
+    }
+
+"""
+I didn't catch the last word, can you please repeat it for me.
+I'm sorry I wasn't paying attention, can you please repeat the last word
+Please repeat the word you are looking for
+I'm not sure I know that word. Can you repeat the word please?
+please provide me the word you are looking for
+
+
+I'm looking for the word {WORD}
+the word was {WORD}
+the word is {WORD}
+
+
+TODO:// add try catch block in every api call
+TODO:// make responses to show cards as well
+"""
+
