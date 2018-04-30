@@ -10,6 +10,8 @@ choice = -1
 
 # python-lambda-local -f lambda_handler -t 10 lambda_function.py ./events/event.json
 
+# TODO:// add if len(results) <= 0 condition in every intent
+
 def lambda_handler(event, context):
     if event['request']['type'] == "LaunchRequest":
         return response(getWelcomeMessage(), False)
@@ -59,31 +61,38 @@ def GetDefinitionIntent(intent):
     url = baseURL + 'entries/' + language + '/' + word.lower()
     print(word, language, url)
 
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-    rjson = json.loads(r.text)
+    try:
+        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        rjson = json.loads(r.text)
+    except Exception as e:
+        return response("Sorry, I couldn't find anything for " + word + ". Please try again.", True)
+    
     defs = []
     for k in rjson['results']:
         for i in k['lexicalEntries']:
             for j in i['entries']:
                 for m in j['senses']:
-                    for n in m['definitions']:
-                        defs.append(n)
+                    if m.has_key('definitions') : 
+                        for n in m['definitions']:
+                            defs.append(n)
 
-    n = len(defs)
-    starters = [
-        "The definition" + ("s" if n > 1 else "") + " of the word " + word + (" are" if n > 1 else " is") + " as follows, ",
-        "Here's what I found, ",
-        "The word " + word + " means, ",
-        "According to oxford Dictionary, the meaning of the word " + word +" is ",
-        "The word " + word + " defines as follows, ",
-        word + " is defined as, ", 
-        "The denotion of the word " + word + " is, ",
-        "the exposition of the word " + word + " means, ",
-    ]
-    starter = getRandom (starters)
-    rest = getFromArray(defs)
-    outputSpeech = starter + rest
-    return response(outputSpeech, True)
+    if len(defs) > 0 : 
+        starters = [
+            "The definition" + ("s" if n > 1 else "") + " of the word " + word + (" are" if n > 1 else " is") + " as follows, ",
+            "Here's what I found, ",
+            "The word " + word + " means, ",
+            "According to oxford Dictionary, the meaning of the word " + word +" is ",
+            "The word " + word + " defines as follows, ",
+            word + " is defined as, ", 
+            "The denotion of the word " + word + " is, ",
+            "the exposition of the word " + word + " means, ",
+        ]
+        starter = getRandom (starters)
+        rest = getFromArray(defs)
+        outputSpeech = starter + rest
+        return response(outputSpeech, True)
+    else : 
+        return response("Sorry, I couldn't find any definitions for " + word, True)
 
 
 def GetSynonymsIntent(intent):
@@ -92,25 +101,33 @@ def GetSynonymsIntent(intent):
     url = baseURL + 'entries/' + language + '/' + word + '/synonyms'
     print(word, language, url)
 
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-    rjson = json.loads(r.text)
+    try:
+        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        rjson = json.loads(r.text)
+    except Exception as e:
+        return response("Sorry, I couldn't find anything for " + word + ". Please try again.", True)
+    
     syms = []
     for k in rjson['results']:
         for i in k['lexicalEntries']:
             for j in i['entries']:
                 for m in j['senses']:
-                    for n in m['synonyms']:
-                        syms.append(n['text'])
+                    if m.has_key('synonyms') : 
+                        for n in m['synonyms']:
+                            if n.has_key('text') and n['text'] not in syms: 
+                                syms.append(n['text'])
 
-    n = len(syms)
-    starters = [
-        "Here's what I've found, "
-    ]
-    starter = getRandom (starters)
-    rest = getFromArray(syms)
-    # print(starter, rest)
-    outputSpeech = starter + rest
-    return response(outputSpeech, True)
+    if len(syms) > 0 :
+        starters = [
+            "Here's what I've found, "
+        ]
+        starter = getRandom (starters)
+        rest = getFromArray(syms)
+        # print(starter, rest)
+        outputSpeech = starter + rest
+        return response(outputSpeech, True)
+    else : 
+        return response("Sorry, I couldn't find any synonyms for " + word, True)
 
 
 def GetAntonymsIntent(intent):
@@ -118,88 +135,115 @@ def GetAntonymsIntent(intent):
     url = baseURL + 'entries/' + language + '/' + word + '/antonyms'
     print(word, language, url)
 
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+    try:
+        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        rjson = json.loads(r.text)
+    except Exception as e:
+        return response("Sorry, I couldn't find anything for " + word + ". Please try again.", True)
 
-    rjson = json.loads(r.text)
     antyms = []
     for k in rjson['results']:
         for i in k['lexicalEntries']:
             for j in i['entries']:
                 for m in j['senses']:
-                    for n in m['antonyms']:
-                        antyms.append(n['text'])
+                    if m.has_key('antonyms') : 
+                        for n in m['antonyms']:
+                            if n.has_key('text') and n['text'] not in antyms: 
+                                antyms.append(n['text'])
 
-    n = len(antyms)
-    starters = [
-        "Here's what I've found, "
-    ]
-    starter = getRandom (starters)
-    rest = getFromArray(antyms)
-    # print(starter, rest)
-    outputSpeech = starter + rest
-    return response(outputSpeech, True)
+    if len(antyms) > 0 :
+        starters = [
+            "Here's what I've found, "
+        ]
+        starter = getRandom (starters)
+        rest = getFromArray(antyms)
+        # print(starter, rest)
+        outputSpeech = starter + rest
+        return response(outputSpeech, True)
+    else : 
+        return response("Sorry, I couldn't find any antonyms for " + word, True)
     
 
 def GetExamplesIntent(intent):
     word, language = getWordnLanguage(intent)
-    if language == 'en' or language == 'es':
-        url = baseURL + 'entries/' + language + '/' + word + '/sentences'
-    else:
-        response_plain_text(getLanguageNotSupportedMessage(), false, GetExamplesIntent)
-
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+    if language != 'en' and language != 'es':
+        return response("Sorry only english and spanish are supported for examples", True)
     
-    rjson = json.loads(r.text)
+    url = baseURL + 'entries/' + language + '/' + word + '/sentences'
+
+    try:
+        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        rjson = json.loads(r.text)
+    except Exception as e:
+        return response("Sorry, I couldn't find anything for " + word + ". Please try again.", True)
+
     examples = []
     for k in rjson['results']:
         for i in k['lexicalEntries']:
-            for sent in i['sentences']:
-                examples.append(sent['text'])
+            if i.has_key('sentences') : 
+                for sent in i['sentences']:
+                    if sent.has_key('text'):    
+                        examples.append(sent['text'])
 
-    starters = [
-        "Here's what I've found, "
-    ]
-    starter = getRandom (starters)
-    rest = ""
-    i = 0
-    for e in examples :
-        index = e.find(word) 
-        e = e[ : e.find(",")]
-        if index != -1: 
-            rest += e[:index] + '<emphasis level="strong">' + e[index : e.find(" ", index)] + '</emphasis>' + e[e.find(" ", index) : ] + ". "
-        if i > 1:
-            break
-        i += 1
-    # print(starter, rest)
-    outputSpeech = starter + rest
-    return response_SSML(outputSpeech, True)
+    if len(examples) > 0 :
+        starters = [
+            "Here's what I've found, "
+        ]
+        starter = getRandom (starters)
+        rest = ""
+        i = 0
+        random.shuffle(examples)
+        print("\n")
+        for e in examples :
+            print(e)
+            e = e[ : e.find(",")]
+            index = e.find(word) 
+            if index == -1 : 
+                continue
+            _next = e.find(" ", index + 1)
+            if index != -1: 
+                rest += e[:index] + '<emphasis level="moderate">' + e[index : (_next if _next != -1 else len(e))] + '</emphasis>' + e[(_next if _next != -1 else len(e)) : ] + ". "
+            if i > 1:
+                break
+            i += 1
+        # print(starter, rest)
+        outputSpeech = starter + rest
+        return response_SSML(outputSpeech, True)
+    else : 
+        return response("Sorry, I couldn't find any examples for " + word, True)
 
 def GetDomainsIntent(intent):
     word, language = getWordnLanguage(intent)
     url = baseURL + 'entries/' + language + '/' + word.lower()
     print(word, language, url)
 
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-    rjson = json.loads(r.text)
+    try:
+        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        rjson = json.loads(r.text)
+    except Exception as e:
+        return response("Sorry, I couldn't find anything for " + word + ". Please try again.", True)
 
-    domains = set()
+    domains = []
     for k in rjson['results']:
         for i in k['lexicalEntries']:
             for j in i['entries']:
                 for m in j['senses']:
                     if m.has_key('domains'):
                         for d in m['domains']:
-                            domains.add(d)
+                            if d not in domains : 
+                                domains.append(d)
 
-    n = len(domains)
-    starters = [
-        "Here's what I've found, "
-    ]
-    starter = getRandom (starters)
-    rest = getFromArray(domains)
-    # print(starter, rest)
-    outputSpeech = starter + rest
-    return response(outputSpeech, True)
+    if len(domains) > 0 :
+        starters = [
+            "Here's what I've found, "
+        ]
+        starter = getRandom (starters)
+        rest = getFromArray(domains)
+        # print(starter, rest)
+        outputSpeech = starter + rest
+        return response(outputSpeech, True)
+    else : 
+        return response("Sorry, I couldn't find the domains of " + word, True)
 
 
 def GetEtomologiesIntent(intent):
@@ -207,26 +251,32 @@ def GetEtomologiesIntent(intent):
     url = baseURL + 'entries/' + language + '/' + word.lower()
     print(word, language, url)
 
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-    rjson = json.loads(r.text)
-
+    try:
+        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        rjson = json.loads(r.text)
+    except Exception as e:
+        return response("Sorry, I couldn't find anything for " + word + ". Please try again.", True)
+    
     etymologies = []
     for k in rjson['results']:
         for i in k['lexicalEntries']:
             for j in i['entries']:
                 if j.has_key('etymologies'):
                     for etms in j['etymologies']:
-                        etymologies.append(etms)
+                        if etms not in etymologies : 
+                            etymologies.append(etms)
 
-    n = len(etymologies)
-    starters = [
-        "Here's what I've found, "
-    ]
-    starter = getRandom (starters)
-    rest = getFromArray(etymologies)
-    # print(starter, rest)
-    outputSpeech = starter + rest
-    return response(outputSpeech, True)
+    if len(etymologies) > 0 :
+        starters = [
+            "The word " + word +" is derived from "
+        ]
+        starter = getRandom (starters)
+        rest = getFromArray(etymologies)
+        # print(starter, rest)
+        outputSpeech = starter + rest
+        return response(outputSpeech, True)
+    else : 
+        return response("Sorry, I couldn't find any history related to " + word, True)
     
 
 def SpellingIntent(intent):
@@ -242,17 +292,15 @@ def GetTranslationsIntent(intent):
     lan2 = getSlotValue(intent, 'LANGUAGE_T')
     if lan1 != -1:
         language1 = checkLanguage(lan1)
-    else:
+    else : 
         language1 = 'en'
 
     if lan2 != -1:
         language2 = checkLanguage(lan2)
-    else:
-        language2 = 'en'
-
+        
     if language1 == language2:
-        # TODO:// return correct response 
-        return "You cannot translate to same language."
+        return response("You cannot translate to the same language. It will be the same, obviously. Please try again for different languages.", True)
+
     available_languages = ['en', 'es', 'nso', 'zu', 'ms', 'id', 'tn', 'ur', 'pt', 'de']
     if language1 not in available_languages or language2 not in available_languages:
         return response("Sorry, for translation only these languages are supported, English, Spanish, Northern Sotho, isiZulu, Malay, Indonesian, Setswana, Urdu, Portuguese and German.", True)
@@ -260,9 +308,11 @@ def GetTranslationsIntent(intent):
     url = baseURL + 'entries/' + language1 + '/' + word + '/translations=' + language2
     print(word, language1, language2, url)
 
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-    print(r.status_code)
-    rjson = json.loads(r.text)
+    try:
+        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        rjson = json.loads(r.text)
+    except Exception as e:
+        return response("Sorry, I couldn't find anything for " + word + ". Please try again.", True)
 
     translations = []
     for k in rjson['results']:
@@ -271,14 +321,20 @@ def GetTranslationsIntent(intent):
                 for sense in j['senses']:
                     if sense.has_key('translations'):
                         for tra in sense['translations']:
-                          translations.append(tra['text'])
+                            if tra.has_key('text') and tra['text'] not in translations: 
+                                translations.append(tra['text'])
 
-    starter = "The " + lan2 + " translation of " + lan1 + " word " + word + " is, " 
+    if len(translations) > 0 : 
 
-    rest = getFromArray(translations)
-    # print(starter, rest)
-    outputSpeech = starter + rest
-    return response(outputSpeech, True)
+        starter = "The " + lan2 + " translation of " + lan1 + " word " + word + " is, " 
+
+        rest = getFromArray(translations)
+        # print(starter, rest)
+        outputSpeech = starter + rest
+        return response(outputSpeech, True)
+    else : 
+        return response("Sorry, I couldn't find any translation of the " + word + " to " + lan2 + ". Please try again", True)
+
 
 
 
@@ -293,15 +349,23 @@ def puten(lan):
 
 
 def do_help():
-    Message = "You can ask for definitions, synonyms, antonyms, examples, domains in which your word is spoken, etomologies, spellings and translations" \
-            "you can say, tell me the definition of the word 'change', "\
-            "or you can say, tell me the synonyms of the word 'change', "\
-            "or you can say, tell me the examples of the word 'change', "\
-            "or you can say, tell me the domains in which the word 'change' is used, "\
-            "or you can say, what is the etomology of the word 'change', "\
-            "or you can say, what is the spelling of the word 'change'. "\
-            "What can I do for you?"
-    return response(Message, False)
+    Features = "The Protone dictionary supports multiple features like definitions, synonyms, antonyms, examples, domains in which your word is spoken, etomologies, spellings and translations. For example, "
+    Messages = [
+        "to get the definition of the word 'change', you can say, tell me the definition of the word 'change'. ",
+        "to get the synonyms of the word 'change', you can say, tell me the synonyms of the word 'change'. ",
+        "to get the antonyms of the word 'change', you can say, tell me the antonyms of the word 'change'. ",
+        "to get some examples of using the word 'change', you can say, tell me the examples of the word 'change'. ",
+        "to know the domains in which a particular word is used, you can say, tell me the domains in which the word 'change' is used. ",
+        "to know the history behind the word 'change', you can say, what is the etomology of the word 'change'. ",
+        "to get the spelling of word change, you can say, what is the spelling of the word 'change'. "
+    ]
+    rest = [
+        "There are some more examples of using protone dictionary. Ask for help again to know all of them.",
+        "What can I do for you?",
+        "Is there anything I can do for you?",
+        "Hope that I helped."
+    ]
+    return response(Features + getRandom(Messages) + getRandom(rest), False)
 
 
 def do_stop():
@@ -323,6 +387,7 @@ def getWord(intent):
         return word.lower()
     else:
         return WordAgain(intent)
+
 
 def getSlotValue(intent, slot):
     if intent['slots'].has_key(slot):
@@ -376,7 +441,7 @@ def checkLanguage(lan):
     elif lan == 'gujarati':
         return 'gu'
     else:
-        return response_plain_text(getLanguageNotSupportedMessage(), False)
+        return -1
 
 
 def getRandom(starters):
@@ -464,25 +529,12 @@ def getWelcomeMessage():
         "Hello there, shall we get started?",
         "Welcome, What should I look for today?",
         "Welcome, did you find any new words?",
-        "Welcome, hope on to the world of words",
+        "Welcome, hop on to the world of words",
         "I'm soo happy to see you.",
         "Hello, nice to meet you.",
         "Hello, let's find meaning of some interesting words."
     ];
     return getRandom(Messages)
-
-
-def getHelpMessage():
-    return  "You can say what is the definition of the word YOUR WORD" \
-            " or you can say give me the synonyms of the word YOUR WORD "
-
-
-def getStopMessage():
-    return "Nice meeting you. Please visit again"
-
-
-def getLanguageNotSupportedMessage():
-    return "Sorry the given language is not supported for this operation"
 
 
 def dialog_response(attributes, endsession):
@@ -513,19 +565,6 @@ def response_SSML(outputSpeech, shouldEndSession):
     }
 
 """
-I didn't catch the last word, can you please repeat it for me.
-I'm sorry I wasn't paying attention, can you please repeat the last word
-Please repeat the word you are looking for
-I'm not sure I know that word. Can you repeat the word please?
-please provide me the word you are looking for
-
-
-I'm looking for the word {WORD}
-the word was {WORD}
-the word is {WORD}
-
-
-TODO:// add try catch block in every api call
 TODO:// make responses to show cards as well
 """
 
